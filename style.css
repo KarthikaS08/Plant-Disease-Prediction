@@ -1,0 +1,100 @@
+/* General Body Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* App container styles */
+  .App {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header Styling */
+  h2 {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+  
+  /* Upload Form Styles */
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  input[type="file"] {
+    padding: 10px;
+    margin: 15px 0;
+    background-color: #f1f1f1;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 350px;
+  }
+  
+  select {
+    padding: 10px;
+    margin: 15px 0;
+    background-color: #f1f1f1;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 350px;
+  }
+  
+  button {
+    padding: 12px 20px;
+    margin-top: 20px;
+    background-color: #2ecc71;
+    color: #ffffff;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 350px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #27ae60;
+  }
+  
+  /* Prediction Result Styles */
+  p {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 30px;
+    color: #2980b9;
+    font-weight: bold;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 600px) {
+    .App {
+      margin: 20px;
+      padding: 15px;
+    }
+  
+    h2 {
+      font-size: 24px;
+    }
+  
+    input[type="file"],
+    select,
+    button {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+  
