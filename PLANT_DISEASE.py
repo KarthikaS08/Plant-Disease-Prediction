@@ -10,7 +10,7 @@ IMAGE_SIZE = (224, 224)
 BATCH_SIZE = 32
 EPOCHS = 10
 
-# Directories
+# Directories for Plant Disease dataset
 train_dir = r"E:\\plant_train"
 val_dir = r"E:\\plant_validate"
 test_dir = r"E:\\plant_test"
@@ -74,5 +74,5 @@ model.fit(train_generator, epochs=EPOCHS, validation_data=val_generator)
 loss, accuracy = model.evaluate(test_generator)
 print(f"Test Accuracy: {accuracy * 100:.2f}%")
 
-# Save
+# Save model
 model.save("plant_disease_model.h5")
