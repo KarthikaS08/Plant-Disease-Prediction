@@ -2,62 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Upload and Prediction</title>
+    <title>Plant & Tree Classifier</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  </head>
+</head>
 <body>
+    <div class="container">
+        <h1>🌿 Plant & Tree Classifier</h1>
+        <form id="upload-form" action="/predict" method="POST" enctype="multipart/form-data">
+            <label for="theme">Choose Type:</label>
+            <select name="theme" id="theme" required>
+                <option value="plant">Plant Disease</option>
+                <option value="tree">Tree Species</option>
+            </select>
 
-    <h1>Upload an Image for Prediction</h1>
+            <label for="file">Upload Image:</label>
+            <input type="file" name="file" id="file" accept="image/*" required>
 
-    <!-- Form to upload image -->
-    <form id="uploadForm">
-        <input type="file" id="fileInput" name="file" accept="image/*" />
-        <button type="submit">Upload Image</button>
-    </form>
+            <button type="submit">Predict</button>
+        </form>
 
-    <div id="result">
-        <!-- Prediction Result will appear here -->
+        <div id="result" class="result"></div>
     </div>
 
     <script>
-        document.getElementById('uploadForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        const form = document.getElementById('upload-form');
+        const resultDiv = document.getElementById('result');
+
+        form.onsubmit = async function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
             
-            // Get the selected file
-            const fileInput = document.getElementById('fileInput');
-            const file = fileInput.files[0];
+            resultDiv.innerHTML = "⏳ Processing...";
 
-            if (!file) {
-                alert('Please select an image');
-                return;
-            }
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                });
 
-            const formData = new FormData();
-            formData.append('file', file);
+                const data = await response.json();
 
-            // Send the file to the backend using fetch
-            fetch('/predict', {
-                method: 'POST',
-                body: formData,
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    alert(data.error);
-                } else {
-                    // Display the result (filename and prediction)
-                    document.getElementById('result').innerHTML = `
-                        <p><strong>File:</strong> ${data.filename}</p>
-                        <p><strong>Prediction:</strong> ${data.prediction}</p>
+                if (response.ok) {
+                    resultDiv.innerHTML = `
+                        ✅ <strong>Prediction:</strong> ${data.prediction}<br>
+                        🖼️ <strong>Image:</strong> ${data.filename}<br>
+                        🧪 <strong>Theme:</strong> ${data.theme}
                     `;
+                } else {
+                    resultDiv.innerHTML = `❌ Error: ${data.error}`;
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
+            } catch (error) {
+                resultDiv.innerHTML = `❌ Request failed: ${error.message}`;
+            }
+        };
     </script>
-
 </body>
 </html>
